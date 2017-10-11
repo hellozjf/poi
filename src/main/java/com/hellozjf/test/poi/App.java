@@ -28,6 +28,25 @@ public class App {
     
     public static final Log LOG = LogFactory.getLog(App.class);
     
+    public static void read2() throws Exception {
+        File file = new File("Contract.xls");
+        FileInputStream in = new FileInputStream(file);
+        Workbook workbook = WorkbookFactory.create(in);
+        int sheetCount = workbook.getNumberOfSheets();
+        if (sheetCount != 1) {
+            LOG.debug("sheetCount != 1");
+        }
+        
+        Sheet sheet = workbook.getSheetAt(0);
+        List<Example> list = new ArrayList<>();
+        int rowCount = sheet.getPhysicalNumberOfRows();
+        LOG.debug("rowCount=" + rowCount);
+        for (int r = 1; r < rowCount; r++) {
+            Row row = sheet.getRow(r);
+            System.out.println(row.getCell(0).getStringCellValue());
+        }
+    }
+    
     public static void read() throws Exception {
         
         SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
@@ -129,6 +148,6 @@ public class App {
     }
     
     public static void main(String[] args) throws Exception {
-        write();
+        read2();
     }
 }
